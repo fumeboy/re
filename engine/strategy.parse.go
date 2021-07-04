@@ -52,7 +52,7 @@ func ArgsTo(args []Arg) (r []interface{}) {
 }
 
 type Rule struct {
-	Path      []int
+	Path      []string
 	Factor    string
 	Operation int
 	Args      []Arg

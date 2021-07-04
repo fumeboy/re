@@ -74,7 +74,7 @@ func init() {
 					Model:  gorm.Model{ID: 1},
 					View:   `和上一次消费金额相同`,
 					Script: `
-						subDomain := domain(this, "user domain1")
+						subDomain := domain("user domain1")
 						list := factor(subDomain, "ConsumptionAmountListMonth")
 						if len(list) > 0 {
 							output = list[0] == self

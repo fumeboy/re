@@ -6,16 +6,7 @@ import (
 	"re/db/form"
 )
 
-func DomainBridgeGet(from, to int) (form.DomainBridge, error) {
-	var d form.DomainBridge
-	sql := client.DB.Where(&form.DomainBridge{From: from, To: to}).First(&d)
-	if sql.Error != nil {
-		return form.DomainBridge{}, sql.Error
-	}
-	return d, nil
-}
-
-func DomainBridgeGet2(from_domain_id int, bridgeCode string) (form.DomainBridge, error) {
+func DomainBridgeGet(from_domain_id int, bridgeCode string) (form.DomainBridge, error) {
 	var d form.DomainBridge
 	sql := client.DB.Where(&form.DomainBridge{From: from_domain_id, Code: bridgeCode}).First(&d)
 	if sql.Error != nil {

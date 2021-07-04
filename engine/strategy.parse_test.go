@@ -14,11 +14,11 @@ import (
 	用户
 		<*>信用分
 			(2) 高于百分之 {} 的用户
-		<*>本月消费金额列表
+		<*>本月消费金额列表 = [200,100,150]
 			(3) 平均值小于 {}
 
 	商品
-		<*>商品月销量
+		<*>商品月销量 = 188
 			(4) 大于等于 {} 且小于 {}
 
 	testData 调用上列的 1 2 3 4 四种操作符
@@ -27,22 +27,16 @@ const testData = `
 {
 	"rules": [
 		{"path":[], "factor":"amount", "operation": 1, "args": []},
-		{"path":[2], "factor":"CreditScore", "operation": 2, "args": [{"typ":0, "value":20}]},
-		{"path":[2], "factor":"ConsumptionAmountListMonth", "operation": 3, "args": [{"typ":0, "value":150}]},
-		{"path":[3], "factor":"monthly_sales", "operation": 4, "args": [{"typ":0, "value":20}, {"typ":0, "value":280}]}
+		{"path":["user domain1"], "factor":"CreditScore", "operation": 2, "args": [{"typ":0, "value":20}]},
+		{"path":["user domain2"], "factor":"ConsumptionAmountListMonth", "operation": 3, "args": [{"typ":0, "value":151}]},
+		{"path":["commodity domain"], "factor":"monthly_sales", "operation": 4, "args": [{"typ":0, "value":20}, {"typ":0, "value":180}]}
 	],
 	"combination": "1&2&3&4"
 }
 `
 
-func Test1(t *testing.T) {
+func TestParse(t *testing.T) {
 	var s Strategy
 	json.Unmarshal([]byte(testData), &s)
-
-	fmt.Println(strategyExec(s, map[string]interface{}{
-		"consumer_id":  1,
-		"seller_id":    2,
-		"amount":       200, // 和上次消费金额相同；上次消费金额暂时写死在 db/test.go::本月消费金额列表 = [200,100,150]
-		"commodity_id": 3,
-	}))
+	fmt.Println(s)
 }

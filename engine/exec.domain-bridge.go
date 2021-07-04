@@ -31,9 +31,8 @@ func newBridgeScriptExecutor(script string) (bridgeScriptExecutor, error) {
 	return bridgeScriptExecutor{c}, nil
 }
 
-func (b bridgeScriptExecutor) exec(ctx runtimeContext, domain_id int) (tengoMAP, error) {
+func (b bridgeScriptExecutor) exec(ctx domainStatus) (tengoMAP, error) {
 	ctx.ImportTangoFn(b.c)
-	b.c.Set("this", domain_id)
 	b.c.Set("output", nil)
 	if err := b.c.Run(); err != nil {
 		panic(err)

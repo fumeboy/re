@@ -26,7 +26,7 @@ type factorConstructorExecutor struct {
 func newFactorConstructorExecutor(script string) (factorConstructorExecutor, error) {
 	s := tengo.NewScript([]byte(script))
 	presetTangoFn(s)
-	_ = s.Add("input", nil)
+	_ = s.Add("this", nil)
 	_ = s.Add("output", nil)
 	c, err := s.Compile()
 	if err != nil {
@@ -35,9 +35,8 @@ func newFactorConstructorExecutor(script string) (factorConstructorExecutor, err
 	return factorConstructorExecutor{c}, nil
 }
 
-func (b factorConstructorExecutor) exec(ctx runtimeContext, domain_id int) (tengo.Object, error) {
+func (b factorConstructorExecutor) exec(ctx domainStatus) (tengo.Object, error) {
 	ctx.ImportTangoFn(b.c)
-	b.c.Set("this", domain_id)
 	b.c.Set("output", nil)
 	if err := b.c.Run(); err != nil {
 		panic(err)
