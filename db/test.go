@@ -27,14 +27,14 @@ var db = client.DB
 			(1) 和上一次消费金额相同
 		购买物品ID（商品）
 
-	用户
+	用户域
 		ID
 		<*>信用分
 			(2) 高于百分之 {} 的用户
 		<*>本月消费金额列表
 			(3) 平均值小于 {}
 
-	商品
+	商品域
 		ID
 		<*>商品月销量
 			(4) 大于等于 {} 且小于 {}
@@ -137,7 +137,7 @@ func init() {
 		{ // operation
 			db.Create(&form.Operation{
 				Model:  gorm.Model{ID: 2},
-				View:   `高于百分之 {type: "int32", placeholder: "占比"} 的用户`,
+				View:   `高于百分之 {type: "int", placeholder: "占比"} 的用户`,
 				Script: "output = true", // TODO, 这里应该是 rpc 调用结果
 			})
 			db.Create(&form.RelFactorOperation{OperationID: 2, FactorID: 6})
@@ -188,7 +188,7 @@ func init() {
 		{ // operation
 			db.Create(&form.Operation{
 				Model:  gorm.Model{ID: 4},
-				View:   `大于等于 {type: "int32", placeholder: "数字1"} 且小于 {type: "int32", placeholder: "数字2"}`,
+				View:   `大于等于 {type: "int", placeholder: "数字1"} 且小于 {type: "int", placeholder: "数字2"}`,
 				Script: "output = (self >= args[0] && self < args[1])",
 			})
 			db.Create(&form.RelFactorOperation{OperationID: 4, FactorID: 9})

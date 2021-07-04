@@ -20,6 +20,8 @@ import (
 	商品
 		<*>商品月销量
 			(4) 大于等于 {} 且小于 {}
+
+	testData 调用上列的 1 2 3 4 四种操作符
  */
 const testData = `
 {
